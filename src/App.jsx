@@ -55,10 +55,12 @@ const App = () => {
     }
   };
 
+  /* eslint-disable */
   useEffect(async () => {
     await fetchProducts();
     await fetchCart();
   }, []);
+  /* eslint-enable */
 
   return (
     <Router>

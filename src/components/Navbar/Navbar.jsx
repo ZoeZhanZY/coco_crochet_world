@@ -4,11 +4,14 @@ import {
   Toolbar,
   IconButton,
   Badge,
-  MenuItem,
-  Menu,
+  //MenuItem,
+  //Menu,
   Typography,
 } from "@material-ui/core";
-import { LocalParkingOutlined, ShoppingCart } from "@material-ui/icons";
+import {
+  //LocalParkingOutlined,
+  ShoppingCart,
+} from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
