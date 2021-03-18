@@ -8,6 +8,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { AddShoppingCart } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 import useStyles from "./styles";
 
@@ -44,6 +45,8 @@ const Product = ({ product, onAddToCart }) => {
           >
             <AddShoppingCart />
           </IconButton>
+
+          <Link to={`/product/${product.id}`}>go go go</Link>
         </CardActions>
       </Card>
     </div>
