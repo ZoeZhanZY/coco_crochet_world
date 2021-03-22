@@ -87,7 +87,7 @@ const App = () => {
             />
           </Route>
           <Route exact path="/product/:id">
-            <ProductPage />
+            <ProductPage onAddToCart={handleAddToCart} />
           </Route>
         </Switch>
       </div>
