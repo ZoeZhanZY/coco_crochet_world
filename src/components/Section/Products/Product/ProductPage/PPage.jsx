@@ -3,13 +3,13 @@ import {
   Container,
   Typography,
   Card,
-  CardMedia,
+  CircularProgress,
   CardContent,
   CardActions,
   IconButton,
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
-import { commerce } from "../../../../lib/commerce";
+import { commerce } from "../../../../../lib/commerce";
 import useStyles from "./styles";
 import Grid from "@material-ui/core/Grid";
 import { AddShoppingCart } from "@material-ui/icons";
@@ -19,24 +19,27 @@ const PPage = ({ onAddToCart }) => {
   const classes = useStyles();
   const { id } = useParams();
   const [productData, setProductData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(async () => {
     const pData = await commerce.products.retrieve(id);
     setProductData(pData);
+    setIsLoading(false);
   }, [id]);
   console.log("productData", productData);
 
   return (
     <main className={classes.content}>
       <div className={classes.toolbar} />
+      {isLoading && (
+        <div>
+          <CircularProgress color="secondary" />
+          Loading
+        </div>
+      )}
       {productData && (
         <>
           <Card className={classes.root}>
-            <CardMedia
-              className={classes.media}
-              image={productData.media.source}
-              title={productData.name}
-            />
             <CardContent>
               <div className={classes.cardContent}>
                 <Typography variant="h5" gutterBottom>
@@ -58,6 +61,9 @@ const PPage = ({ onAddToCart }) => {
                 onClick={() => onAddToCart(productData.id, 1)}
               >
                 <AddShoppingCart />
+                <Typography variant="body2" color="inherit">
+                  Add to Cart Now
+                </Typography>
               </IconButton>
             </CardActions>
           </Card>
