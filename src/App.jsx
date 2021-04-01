@@ -29,8 +29,18 @@ const App = () => {
 
   const handleAddToCart = async (productId, quantity) => {
     const { cart } = await commerce.cart.add(productId, quantity);
+    // const addedCart = cart;
+
+    // addedCart.line_items = [
+    //   ...cart.line_items,
+    //   {
+    //     product_id: productId,
+    //     quantity,
+    //   },
+    // ];
 
     setCart(cart);
+    console.log("cart", cart);
   };
 
   const handleUpdateCartQty = async (productId, quantity) => {
@@ -48,6 +58,15 @@ const App = () => {
   const refreshCart = async () => {
     const newCart = await commerce.cart.refresh();
     setCart(newCart);
+  };
+
+  const handleCouponToCart = async (event, coupon) => {
+    event.preventDefault();
+
+    const cartWithCoupon = cart;
+    cartWithCoupon.discount_code = [coupon];
+
+    setCart(cartWithCoupon);
   };
 
   const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
@@ -71,19 +90,6 @@ const App = () => {
     await fetchCart();
   }, []);
   /* eslint-enable */
-  console.log("categories", categories);
-
-  // const renderProducts = () => {
-  //   return categories.map((category) => {
-  //     return (
-  //       <Products
-  //         products={products}
-  //         onAddToCart={handleAddToCart}
-  //         category={category}
-  //       />
-  //     );
-  //   });
-  // };
 
   return (
     <Router>
@@ -91,7 +97,6 @@ const App = () => {
         <Navbar totalItems={cart.total_items} />
         <Switch>
           <Route exact path="/">
-            {/* <div>{renderProducts()}</div> */}
             <Section
               products={products}
               onAddToCart={handleAddToCart}
@@ -103,6 +108,7 @@ const App = () => {
               cart={cart}
               handleUpdateCartQty={handleUpdateCartQty}
               handleRemoveFromCart={handleRemoveFromCart}
+              handleCouponToCart={handleCouponToCart}
             />
           </Route>
 

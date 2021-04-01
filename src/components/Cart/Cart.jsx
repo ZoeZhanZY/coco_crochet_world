@@ -3,10 +3,16 @@ import { Container, Typography, Button, Grid } from "@material-ui/core";
 import useStyles from "./styles";
 import CartItem from "./CartItem/CartItem";
 import { Link } from "react-router-dom";
+import Coupon from "./Coupon/Coupon";
 
-const Cart = ({ cart, handleUpdateCartQty, handleRemoveFromCart }) => {
+const Cart = ({
+  cart,
+  handleUpdateCartQty,
+  handleRemoveFromCart,
+  handleCouponToCart,
+}) => {
   const classes = useStyles();
-
+  console.log("cart", cart);
   const EmptyCart = () => (
     <Typography variant="subtitle1">
       You have no items in your shopping cart,
@@ -29,6 +35,8 @@ const Cart = ({ cart, handleUpdateCartQty, handleRemoveFromCart }) => {
           </Grid>
         ))}
       </Grid>
+
+      <Coupon handleCouponToCart={handleCouponToCart} />
       <div className={classes.cardDetails}>
         <Typography variant="h4">
           Subtotal: {cart?.subtotal?.formatted_with_symbol}

@@ -21,12 +21,15 @@ const PPage = ({ onAddToCart }) => {
   const [productData, setProductData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(async () => {
-    const pData = await commerce.products.retrieve(id);
-    setProductData(pData);
+  useEffect(() => {
+    const fetchData = async () => {
+      const pData = await commerce.products.retrieve(id);
+      setProductData(pData);
+    };
+
+    fetchData();
     setIsLoading(false);
   }, [id]);
-  console.log("productData", productData);
 
   return (
     <main className={classes.content}>
@@ -71,7 +74,7 @@ const PPage = ({ onAddToCart }) => {
           <Container>
             <Grid Container justify="center">
               {productData.assets.map((asset) => (
-                <img src={asset.url} width={400} />
+                <img src={asset.url} width={400} alt={asset.filename} />
               ))}
             </Grid>
           </Container>

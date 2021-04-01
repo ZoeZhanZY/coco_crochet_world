@@ -13,6 +13,7 @@ import {
 import useStyles from "./styles";
 import AddressForm from "../AddressForm";
 import PaymentForm from "../PaymentForm";
+import DiscountResult from "../CheckoutDiscount";
 import { commerce } from "../../../lib/commerce";
 import { Link, useHistory } from "react-router-dom";
 
@@ -23,19 +24,17 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
   const [shippingData, setShippingData] = useState({});
+
   const history = useHistory();
 
   useEffect(() => {
     const generateToken = async () => {
       try {
-        console.log("cart0", cart);
         if (cart && cart.id) {
           const token = await commerce.checkout.generateToken(cart.id, {
             type: "cart",
           });
-
           setCheckoutToken(token);
-          console.log("token", token);
         }
       } catch (error) {
         history.pushState("/");
@@ -43,7 +42,35 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
     };
 
     generateToken();
+    console.log("cart", cart);
   }, [cart, history]);
+
+  const checkDiscountCode = async (checkoutTokenId) => {
+    console.log("discountcode", cart.discount_code);
+    console.log("tokenid", checkoutTokenId);
+    const { discountResult } = await commerce.checkout.checkDiscount(
+      checkoutTokenId,
+      {
+        code: cart.discount_code[0],
+      }
+    );
+
+    const getToken = async () => {
+      const token = await commerce.checkout.getToken(checkoutTokenId);
+
+      setCheckoutToken(token);
+    };
+
+    getToken();
+
+    console.log("checkoutToken.live", checkoutToken.live);
+  };
+
+  useEffect(() => {
+    if (cart.discount_code && checkoutToken) {
+      checkDiscountCode(checkoutToken.id);
+    }
+  }, [cart.discount_code, checkoutToken, checkDiscountCode]);
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -109,6 +136,9 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
           <Typography variant="h4" align="center">
             Checkout
           </Typography>
+
+          {/* <CheckoutDiscount checkoutTokenID={checkoutToken} cart={cart} /> */}
+
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((step) => (
               <Step key={step}>

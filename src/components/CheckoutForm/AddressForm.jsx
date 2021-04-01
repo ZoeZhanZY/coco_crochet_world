@@ -15,7 +15,7 @@ import { commerce } from "../../lib/commerce";
 const AddressForm = ({ next, checkoutToken }) => {
   //for shipping countries
   const [shippingCountries, setShippingCountries] = useState([]);
-  const [shippingCountry, setShippingCountry] = useState("");
+  const [shippingCountry, setShippingCountry] = useState("Australia");
   const countries = Object.entries(shippingCountries).map(([code, name]) => ({
     id: code,
     label: name,
@@ -25,6 +25,7 @@ const AddressForm = ({ next, checkoutToken }) => {
     const { countries } = await commerce.services.localeListShippingCountries(
       checkoutTokenId
     );
+    console.log("checkoutTokenId", checkoutTokenId);
     console.log("countries", countries);
     setShippingCountries(countries);
     setShippingCountry(Object.keys(countries)[0]);
@@ -59,7 +60,7 @@ const AddressForm = ({ next, checkoutToken }) => {
 
   //for shipping options
   const [shippingOptions, setShippingOptions] = useState([]);
-  const [shippingOption, setShippingOption] = useState("");
+  const [shippingOption, setShippingOption] = useState("Domestic");
 
   const methods = useForm();
 
