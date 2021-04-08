@@ -3,14 +3,9 @@ import { Container, Typography, Button, Grid } from "@material-ui/core";
 import useStyles from "./styles";
 import CartItem from "./CartItem/CartItem";
 import { Link } from "react-router-dom";
-import Coupon from "./Coupon/Coupon";
+// import Coupon from "./Coupon/Coupon";
 
-const Cart = ({
-  cart,
-  handleUpdateCartQty,
-  handleRemoveFromCart,
-  handleCouponToCart,
-}) => {
+const Cart = ({ cart, handleUpdateCartQty, handleRemoveFromCart }) => {
   const classes = useStyles();
   console.log("cart", cart);
   const EmptyCart = () => (
@@ -36,7 +31,7 @@ const Cart = ({
         ))}
       </Grid>
 
-      <Coupon handleCouponToCart={handleCouponToCart} />
+      {/* <Coupon handleCouponToCart={handleCouponToCart} /> */}
       <div className={classes.cardDetails}>
         <Typography variant="h4">
           Subtotal: {cart?.subtotal?.formatted_with_symbol}

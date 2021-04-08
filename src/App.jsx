@@ -29,16 +29,6 @@ const App = () => {
 
   const handleAddToCart = async (productId, quantity) => {
     const { cart } = await commerce.cart.add(productId, quantity);
-    // const addedCart = cart;
-
-    // addedCart.line_items = [
-    //   ...cart.line_items,
-    //   {
-    //     product_id: productId,
-    //     quantity,
-    //   },
-    // ];
-
     setCart(cart);
     console.log("cart", cart);
   };
@@ -60,14 +50,14 @@ const App = () => {
     setCart(newCart);
   };
 
-  const handleCouponToCart = async (event, coupon) => {
-    event.preventDefault();
+  // const handleCouponToCart = async (event, coupon) => {
+  //   event.preventDefault();
 
-    const cartWithCoupon = cart;
-    cartWithCoupon.discount_code = [coupon];
+  //   const cartWithCoupon = cart;
+  //   cartWithCoupon.discount_code = [coupon];
 
-    setCart(cartWithCoupon);
-  };
+  //   setCart(cartWithCoupon);
+  // };
 
   const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
     try {
@@ -108,7 +98,6 @@ const App = () => {
               cart={cart}
               handleUpdateCartQty={handleUpdateCartQty}
               handleRemoveFromCart={handleRemoveFromCart}
-              handleCouponToCart={handleCouponToCart}
             />
           </Route>
 

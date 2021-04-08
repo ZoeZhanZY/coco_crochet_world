@@ -23,31 +23,30 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
   const [shippingData, setShippingData] = useState({});
-  const [isDiscountValid, setIsDiscountValid] = useState(false);
 
   const history = useHistory();
 
   useEffect(() => {
-    const checkDiscountCode = async (checkoutTokenId) => {
-      try {
-        const discountResult = await commerce.checkout.checkDiscount(
-          checkoutTokenId,
-          { code: cart.discount_code[0] }
-        );
+    // const checkDiscountCode = async (checkoutTokenId) => {
+    //   try {
+    //     const discountResult = await commerce.checkout.checkDiscount(
+    //       checkoutTokenId,
+    //       { code: cart.discount_code[0] }
+    //     );
 
-        setIsDiscountValid(discountResult.valid);
+    //     setIsDiscountValid(discountResult.valid);
 
-        console.log("discountResult", discountResult);
+    //     console.log("discountResult", discountResult);
 
-        // Apply discount if it's valid
-        if (discountResult.valid) {
-          const token = await commerce.checkout.getToken(checkoutTokenId);
-          setCheckoutToken(token);
-        }
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
+    //     // Apply discount if it's valid
+    //     if (discountResult.valid) {
+    //       const token = await commerce.checkout.getToken(checkoutTokenId);
+    //       setCheckoutToken(token);
+    //     }
+    //   } catch (error) {
+    //     console.log("error", error);
+    //   }
+    // };
     const generateToken = async () => {
       try {
         if (cart && cart.id) {
@@ -56,9 +55,8 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
           });
           setCheckoutToken(checkoutToken);
 
-          if (cart.discount_code.length > 0 && checkoutToken) {
-            checkDiscountCode(checkoutToken.id);
-          }
+          // if (cart.discount_code.length > 0 && checkoutToken) {
+          //   checkDiscountCode(checkoutToken.id);
         }
       } catch (error) {
         history.pushState("/");
@@ -67,6 +65,14 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
 
     generateToken();
   }, [cart, history]);
+
+  // const handleCouponToToken = async (event, coupon) => {
+  //   event.preventDefault();
+
+  //   const tokenWithCoupon = token;
+  //   tokenWithCoupon.discount_code = [coupon];
+
+  //   setCart(tokenWithCoupon);
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -117,11 +123,11 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
     ) : (
       <PaymentForm
         checkoutToken={checkoutToken}
+        setCheckoutToken={setCheckoutToken}
         shippingData={shippingData}
         backStep={backStep}
         onCaptureCheckout={onCaptureCheckout}
         nextStep={nextStep}
-        isDiscountValid={isDiscountValid}
       />
     );
 

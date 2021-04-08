@@ -16,7 +16,7 @@ const PaymentForm = ({
   shippingData,
   onCaptureCheckout,
   nextStep,
-  isDiscountValid,
+  setCheckoutToken,
 }) => {
   const handleSubmit = async (event, elements, stripe) => {
     event.preventDefault();
@@ -65,7 +65,10 @@ const PaymentForm = ({
 
   return (
     <>
-      <Review checkoutToken={checkoutToken} isDiscountValid={isDiscountValid} />
+      <Review
+        checkoutToken={checkoutToken}
+        setCheckoutToken={setCheckoutToken}
+      />
       <Divider />
       <Typography variant="h6" gutterBottom style={{ marginL: "20px 0" }}>
         Payment Method
