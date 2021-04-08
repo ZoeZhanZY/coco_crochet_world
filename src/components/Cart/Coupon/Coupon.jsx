@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Coupon = ({ handleCouponToCart }) => {
-  const [coupon, setCoupon] = useState("xixitest");
+  const [coupon, setCoupon] = useState(null);
 
   const couponHandler = (e) => {
     setCoupon(e.target.value);

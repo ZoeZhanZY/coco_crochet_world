@@ -16,6 +16,7 @@ const PaymentForm = ({
   shippingData,
   onCaptureCheckout,
   nextStep,
+  isDiscountValid,
 }) => {
   const handleSubmit = async (event, elements, stripe) => {
     event.preventDefault();
@@ -64,7 +65,7 @@ const PaymentForm = ({
 
   return (
     <>
-      <Review checkoutToken={checkoutToken} />
+      <Review checkoutToken={checkoutToken} isDiscountValid={isDiscountValid} />
       <Divider />
       <Typography variant="h6" gutterBottom style={{ marginL: "20px 0" }}>
         Payment Method
@@ -86,7 +87,7 @@ const PaymentForm = ({
                   disabled={!stripe}
                   color="primary"
                 >
-                  Pay {checkoutToken.live.subtotal.formatted_with_symbol}
+                  Pay {checkoutToken.live.total.formatted_with_symbol}
                 </Button>
               </div>
             </form>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, ListItem, ListItemText, List } from "@material-ui/core";
 
-const Review = ({ checkoutToken }) => {
+const Review = ({ checkoutToken, isDiscountValid }) => {
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -25,6 +25,15 @@ const Review = ({ checkoutToken }) => {
             {checkoutToken.live.subtotal.formatted_with_symbol}
           </Typography>
         </ListItem>
+
+        {isDiscountValid && (
+          <ListItem style={{ padding: "10px 0" }}>
+            <ListItemText primary="Discount" />
+            <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
+              -{checkoutToken.live.discount.amount_saved.formatted_with_symbol}
+            </Typography>
+          </ListItem>
+        )}
       </List>
     </>
   );
