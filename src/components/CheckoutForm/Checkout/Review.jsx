@@ -2,7 +2,16 @@ import React from "react";
 import { Typography, ListItem, ListItemText, List } from "@material-ui/core";
 import Coupon from "./Coupon";
 
-const Review = ({ checkoutToken, setCheckoutToken }) => {
+const Review = ({
+  checkoutToken,
+  setCheckoutToken,
+  discountPrice,
+  setDiscountPrice,
+  isDiscountChecked,
+  setIsDiscountChecked,
+  isDiscountValid,
+  setIsDiscountValid,
+}) => {
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -24,6 +33,12 @@ const Review = ({ checkoutToken, setCheckoutToken }) => {
         <Coupon
           checkoutToken={checkoutToken}
           setCheckoutToken={setCheckoutToken}
+          discountPrice={discountPrice}
+          setDiscountPrice={setDiscountPrice}
+          isDiscountChecked={isDiscountChecked}
+          setIsDiscountChecked={setIsDiscountChecked}
+          isDiscountValid={isDiscountValid}
+          setIsDiscountValid={setIsDiscountValid}
         />
         <ListItem style={{ padding: "10px 0" }}>
           <ListItemText primary="Total" />

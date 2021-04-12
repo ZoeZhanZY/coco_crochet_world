@@ -23,7 +23,9 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
   const [shippingData, setShippingData] = useState({});
-
+  const [discountPrice, setDiscountPrice] = useState("");
+  const [isDiscountChecked, setIsDiscountChecked] = useState(false);
+  const [isDiscountValid, setIsDiscountValid] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -128,6 +130,12 @@ const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
         backStep={backStep}
         onCaptureCheckout={onCaptureCheckout}
         nextStep={nextStep}
+        discountPrice={discountPrice}
+        setDiscountPrice={setDiscountPrice}
+        isDiscountChecked={isDiscountChecked}
+        setIsDiscountChecked={setIsDiscountChecked}
+        isDiscountValid={isDiscountValid}
+        setIsDiscountValid={setIsDiscountValid}
       />
     );
 
